@@ -1,0 +1,7 @@
+---
+updates:
+  - file: '/home/tbosmans/Downloads/IBM/ISAM/10.0/10.0.6/isva_10.0.6.0_20230529-0304.pkg'
+    version: 10.0.6.0
+    date: '2023-05-29-0304'
+    name: isva
+    type: firmware

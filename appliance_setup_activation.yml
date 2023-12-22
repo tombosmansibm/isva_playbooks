@@ -1,0 +1,16 @@
+---
+- name: Module Activation for appliances
+  hosts: "{{ isam_hosts|default('all') }}"
+  collections:
+    - ibm.isam
+  gather_facts: no
+  tasks:
+    - name: Activate modules module
+      tags: ["activation"]
+      import_role:
+        name: ibm.isam.base.activate_modules
+      vars:
+        activation_keys:
+        - { id: "wga", code: "{{ activation_module_code_wga_10 }}" }
+        - { id: "mga", code: "{{ activation_module_code_mga_10 }}" }
+        - { id: "federation", code: "{{ activation_module_code_federation_10 }}" }

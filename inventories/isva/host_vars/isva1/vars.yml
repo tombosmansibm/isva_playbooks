@@ -1,0 +1,10 @@
+---
+appliance_name: "isam1007.local"
+
+#First steps
+#ansible_connection: "ibm.isam.isam"
+#ansible_isam_username: admin@local
+#ansible_isam_password: "admin"
+#ansible_isam_port: 443
+ansible_host: 172.16.73.138
+

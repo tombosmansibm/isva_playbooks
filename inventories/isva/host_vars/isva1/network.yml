@@ -1,0 +1,33 @@
+---
+interfaces:
+  - label:  '1.1'
+    name: 'master interface'
+    dhcp:
+      enabled: true
+      allowManagement: true
+      providesDefaultRoute: true
+      routeMetric: "1"
+    addresses:
+      - "{{ interface_proxy_default }}"
+  - label: '1.2'
+    name: 'data interface'
+    addresses:
+      - address:            192.168.42.151
+        maskOrPrefix:       "24"
+        allowManagement:    False
+        enabled:            true
+      - address:            192.168.42.152
+        maskOrPrefix:       "24"
+        allowManagement:    False
+        enabled:            true
+
+interface_proxy_default:
+    address:            172.16.73.215
+    maskOrPrefix:       '24'
+    allowManagement:    False
+    enabled:            true
+
+host_records:
+  - addr: "{{ inventory_hostname }}"
+    hostnames:
+      - "{{ appliance_name }}"

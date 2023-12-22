@@ -1,0 +1,14 @@
+# check per appliance host records
+host_records: # CHANGE
+  - addr: "192.168.42.147"
+    hostnames:
+      - apigateway
+
+
+
+#used in webseal and aac group
+# fed_runtime_hostname: "aac.isva-1.ibm.com" # CHANGE
+fed_runtime_hostname: "localhost" # CHANGE
+fed_runtime_port: 443
+fed_runtime_username: "easuser"
+fed_runtime_password: "{{ vault_easuser_pwd }}"

@@ -1,0 +1,32 @@
+# main task to export metadata
+#def export_metadata(isamAppliance, name, filename, check_mode=False, force=False)
+- name: Make sure the export_dir exists {{ federation_export_dir }}
+  file:
+    path: "{{ federation_export_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Export metadata
+  ibm.isam.isam:
+    log: "{{ log_level | default(omit) }}"
+    force: "{{ force | default(omit) }}"
+    action: ibmsecurity.isam.fed.federations.export_metadata
+    isamapi:
+      name: "{{ item.name }}"
+      filename: "{{ federation_export_dir }}/{{ item.name }}_metadata.xml"
+  loop: "{{ federations }}"
+  when:
+   - federation_export_dir is defined
+   - federations is defined
+  notify: Commit Changes
+  loop_control:
+    label: "Exporting to {u'name': u'{{ federation_export_dir }}/{{ item.name }}_metadata.xml'}"
+
+- name: print metadata files
+  debug:
+    msg: "{{ lookup('file', federation_export_dir + '/' + item.name + '_metadata.xml') }}"
+  loop: "{{ federations }}"
+  loop_control:
+    label: "{{ item.name }}_metadata.xml"
+  when:
+    - exportFederationOutput|bool

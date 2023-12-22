@@ -1,0 +1,8 @@
+---
+http_transformations: []
+
+webseal_server_name: "{{ webseal_web_host_name }}-{{ webseal_inst_name }}"
+
+# This is the instance name that will be DELETED
+inst_name: default
+

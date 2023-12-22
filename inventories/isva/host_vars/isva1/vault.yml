@@ -1,0 +1,5 @@
+---
+# This should be encrypted obviously
+vault_ansible_password: admin
+vault_sec_master_pwd: passw0rd
+vault_ldap_pwd: passw0rd

@@ -1,0 +1,16 @@
+---
+- name: Create reverse proxy
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: "Prepare policy server"
+      import_role:
+        name: ibm.isam.web.configure_policyserver
+
+    - name: "Create reverse proxy (listen on port 444 at {{ ansible_host }}"
+      import_role:
+        name: ibm.isam.web.create_reverseproxy_instances
+
+    - name: Configure junctions
+      import_role:
+        name: ibm.isam.web.configure_reverseproxy_junctions

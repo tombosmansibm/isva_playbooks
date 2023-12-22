@@ -1,0 +1,3 @@
+---
+# This should be encrypted obviously
+vault_ansible_password: admin

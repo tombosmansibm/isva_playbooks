@@ -1,0 +1,9 @@
+---
+- hosts: aac
+  roles:
+    - custom.export_accesscontrol_configuration
+    - custom.export_authentication_mechanisms
+    - custom.export_authentication_policies
+    - custom.export_federation_metadata
+    - custom.export_mapping_rules
+    - custom.export_risk_profiles

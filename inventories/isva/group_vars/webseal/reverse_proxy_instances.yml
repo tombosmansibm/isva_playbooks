@@ -1,0 +1,81 @@
+---
+instances:
+- inst_name: default
+  configuration:
+    host: '{{ appliance_name }}'
+    listening_port: '7238'  #7242 does not work
+    admin_id: "{{ webseal_adminid|default('sec_master') }}"
+    admin_pwd: '{{ vault_sec_master_pwd }}'
+    domain: "{{ webseal_domain|default('Default') }}"
+    http_yn: 'no'
+    http_port: '80'
+    https_yn: 'yes'
+    https_port: '443'
+    ip_address: "{{ interface_proxy_default.address }}"
+  entries:
+  - method: set
+    stanza_id: server
+    entries:
+    - [description, "copy from production deployed in ansible"]
+    - [max-idle-persistent-connections-threshold, '-1']
+    - [http-method-disabled-remote, 'TRACE,CONNECT']
+    - [allow-extra-slashes-in-urls, 'false']
+    - [enable-http2, 'no']
+    - [max-ratelimiting-buckets, '16384']
+    - [replace-rsp-headers, 'yes']
+  - method: set
+    stanza_id: rsp-header-names
+    entries:
+    - [strict-transport-security, max-age=31536000;includeSubDomains]
+    - [x-xss-protection, 1;mode=block]
+    - [x-frame-options, SAMEORIGIN]
+    - [x-content-type-options, nosniff]
+  - method: set
+    stanza_id: ssl
+    entries:
+    - [disable-tls-v1, 'yes']
+    - [disable-tls-v11, 'yes']
+    - [disable-tls-v13, 'no']
+    - [gsk-attr-name, 'string:243:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384']
+    - [ssl-auto-refresh, 'yes']
+    - [ssl-pwd-life, '183']
+    - [ssl-authn-type, certificate]
+  - method: set
+    stanza_id: certificate
+    entries:
+    - [secondary-fail-redirect, 'no']
+  - method: set
+    stanza_id: eai
+    entries:
+    - [eai-auth, 'none']
+  - method: set
+    stanza_id: ssl-qop
+    entries:
+    - [ssl-qop-mgmt, 'no']
+  - method: set
+    stanza_id: session
+    entries:
+    - [inactive-timeout, '1800']
+    - [user-session-ids, 'yes']
+    - [create-unauth-sessions, 'yes']
+  - method: set
+    stanza_id: acnt-mgt
+    entries:
+    - [oidc-fragment, oidc_fragment.html]
+    - [ratelimited, ratelimit.html]
+    - [allowed-referers, '%HOST%']
+    - [enable-local-response-redirect, 'no']
+    - [default-response-type, text/html]
+  - method: set
+    stanza_id: local-response-macros
+    entries:
+    - [macro, TAM_OP]
+    - [macro, ERROR_TEXT]
+  - method: set
+    stanza_id: content-mime-types
+    entries:
+    - [ico, image/x-icon]
+  junctions: "{{ rp_default_junctions|default([]) }}"
+#  management_root:
+#    - mgmt_action: import_zip
+#      file: "{{ root_playbook_dir | default(playbook_dir | dirname) }}/files/{{ webseal_cfg_path|default(duo_environment) }}/management_root_files/osr.zip"

@@ -1,0 +1,24 @@
+federations:
+  - name: ISAMRP
+    protocol: OIDC10
+    role: rp
+    configuration:
+      responseTypes:
+        - id_token
+        - token
+        - code
+      advanceConfiguration:
+        activeDelegateId: "skip-advance-map"
+ #       properties:
+ #         ruleType: JAVASCRIPT
+ #         advanceMappingRuleReference: "101"
+      attributeMapping:
+        map: []
+        providerId: "https://www.isva-1.ibm.com/isam/sps/oidc/rp/clubmed"
+      identityMapping:
+        activeDelegateId: "skip-identity-map"
+ #       properties:
+  #        identityMappingRuleReference: "6"
+  #        ruleType: JAVASCRIPT
+      redirectUriPrefix: "https://www.isva-1.ibm.com/isam/sps/oidc/rp/"
+    partners: []

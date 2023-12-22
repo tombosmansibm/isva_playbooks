@@ -1,0 +1,28 @@
+---
+- name: Get risk profiles
+  ibm.isam.isam:
+    log: "{{ log_level | default(omit) }}"
+    force: "{{ force | default(omit) }}"
+    action: ibmsecurity.isam.aac.risk_profiles.get_all
+    isamapi:
+  register: ret_obj
+
+- name    : Set variable get_riskprofiles for use by rest of playbook
+  set_fact:
+    get_riskprofiles: "{{ ret_obj.data | default([]) }}"
+    unique_code              : "{{ 10000 | random }}"
+
+- name: Make sure destination directory "{{ authentication_output_dir }}/{{ unique_code }}" exists
+  become: "{{ authentication_output_become | default(false) }}"
+  file  :
+     path   : "{{ authentication_output_dir }}/{{ unique_code }}"
+     state  : directory
+     mode   : "{{ authentication_output_export_mode }}"
+     group  : "{{ authentication_output_export_group }}"
+     recurse: true
+
+- name: Create a file with the output "{{ authentication_output_dir }}/{{ unique_code }}/risk_profiles.yaml"
+  copy:
+    content: "{{ get_riskprofiles | to_nice_yaml }}"
+    dest: "{{ authentication_output_dir }}/{{ unique_code }}/risk_profiles.yaml"
+

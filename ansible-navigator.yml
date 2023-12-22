@@ -1,0 +1,23 @@
+---
+ansible-navigator:
+  ansible:
+    config:
+      help: false
+      path: ./ansible.cfg
+    inventory:
+      entries:
+        - "./inventories/isva"
+  color:
+    enable: true
+    osc4: false
+  app: run
+  execution-environment:
+    container-engine: podman
+    enabled: true
+    environment-variables:
+      pass: []
+    image: quay.io/tombosmansibm/ibm-isva-ee:latest
+    pull:
+      policy: tag
+  mode: stdout
+  time-zone: Europe/Brussels

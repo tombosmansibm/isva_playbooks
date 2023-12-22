@@ -1,0 +1,6 @@
+---
+collections:
+  - ibm.isam
+#  - name: https://github.com/IBM-Security/isam-ansible-collection.git
+#    type: git
+#    version: master

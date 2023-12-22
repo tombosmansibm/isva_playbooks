@@ -1,0 +1,58 @@
+---
+- name: Get all mapping rules
+  isam:
+    log:       "{{ log_level | default(omit) }}"
+    force:     "{{ force | default(omit) }}"
+    action: ibmsecurity.isam.aac.mapping_rules.get_all
+    isamapi:
+  register: ret_obj
+
+- name: Set variable get_mappingrules for use by rest of playbook
+  set_fact:
+    get_mappingrules: "{{ ret_obj.data | default([]) }}"
+    unique_code              : "{{ 10000 | random }}"
+
+- name: Make sure destination directory "{{ authentication_output_dir }}/{{ unique_code }}" exists
+  become: "{{ authentication_output_become | default(false) }}"
+  file  :
+     path   : "{{ authentication_output_dir }}/{{ unique_code }}"
+     state  : directory
+     mode   : "{{ authentication_output_export_mode }}"
+     group  : "{{ authentication_output_export_group }}"
+     recurse: true
+
+- name: Create a file with the output "{{ authentication_output_dir }}/{{ unique_code }}/authentication_policies.yaml"
+  copy:
+    content: "{{ get_mappingrules | to_nice_yaml }}"
+    dest: "{{ authentication_output_dir }}/{{ unique_code }}/mapping_rules.yaml"
+
+- name: Export all individual mapping rules
+  isam:
+    log:       "{{ log_level | default(omit) }}"
+    force:     "{{ force | default(omit) }}"
+    action: ibmsecurity.isam.aac.mapping_rules.get
+    isamapi:
+       name: "{{ item.name }}"
+  loop: "{{ get_mappingrules }}"
+  loop_control:
+      label: "EXPORT : {{ item.name.split(' ') | join('_') }}"
+  when:
+    - get_mappingrules is defined
+    - not item.predefined
+  register: get_them
+
+- name: debug
+  debug:
+    msg: "{{ get_them.results[0] }}"
+
+- name: Create files
+  copy:
+    content: "{{ item.content | to_nice_yaml }}"
+    dest: "{{ authentication_output_dir }}/{{ unique_code }}/{{ item.name.split(' ') | join('_') }}.yaml"
+  with_items: "{{ get_them.results }}"
+  loop_control:
+    label: "EXPORTING ..."
+  when:
+    - get_them.results is defined
+    - item.content is defined
+
