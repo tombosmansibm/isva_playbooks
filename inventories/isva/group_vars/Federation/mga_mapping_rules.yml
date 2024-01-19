@@ -2,10 +2,10 @@
 mapping_rules:
   - name: saml_lib # Shared lib for SAML.  Not sure what category this should be actually.
     category: InfoMap
-    file: "{{ mapping_rules_dir }}/saml/saml_lib.js"
+    file: "{{ playbook_dir }}/files/saml/saml_lib.js"
     rule_action: set
   - name: saml_config_example
     category: InfoMap
     file: "{{ playbook_dir }}/files/mapping_rules/saml_config_example.js"
-    j2_t: "templates/mapping_rules/saml_config_authbridge.js"
+    j2_t: "templates/mapping_rules/saml_config_example.js"
     rule_action: set
