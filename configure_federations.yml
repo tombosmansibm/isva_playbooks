@@ -1,0 +1,72 @@
+---
+- name: configure federation
+  hosts: Federation
+  collections:
+    - ibm.isam
+  gather_facts: no
+  tasks:
+    - name: prepare object to Lookup ids for mapping rules ( creates mapping_rules_obj & available_mapping_rules )
+      tags:
+        - mapping-rules
+        - federations
+      import_role:
+        name: get_mapping_rules
+
+
+  ##############################################
+  ####   5. Creating point of contact      #####
+  ##############################################
+  ### This is VERY important to set the poc profile to accept SAML without a local user registry   #####
+  ##############################################
+  ## - name: Set point of contact to {{ federation_point_of_contact_name|default('') }}
+  #   tags:
+  #     - poc
+  #   import_role:
+  #     name: ibm.isam.update_point_of_contact
+  #   vars:
+  #     update_point_of_contact_name: "{{ federation_point_of_contact_name }}"
+  #     update_point_of_contact_description: "{{ federation_point_of_contact.description }}"
+  #     update_point_of_contact_authenticateCallbacks: "{{ federation_point_of_contact.authenticateCallbacks }}"
+  #     update_point_of_contact_authnPolicyCallbacks: "{{ federation_point_of_contact.authnPolicyCallbacks|default(omit) }}"
+  #     update_point_of_contact_localIdCallbacks: "{{ federation_point_of_contact.localIdCallbacks|default(omit) }}"
+  #     update_point_of_contact_signInCallbacks: "{{ federation_point_of_contact.signInCallbacks|default(omit) }}"
+  #     update_point_of_contact_signOutCallbacks: "{{ federation_point_of_contact.signOutCallbacks|default(omit) }}"
+
+  #   when:
+  #     - federation_point_of_contact_name is defined
+  # - name: Set Current point of contact
+  #   tags:
+  #     - poc
+  #   import_role:
+  #     name: ibm.isam.set_current_point_of_contact
+  #   vars:
+  #     set_current_point_of_contact_name: "{{ federation_point_of_contact_name }}"
+  #   when:
+  #     - federation_point_of_contact_name is defined
+  ##############################################
+  ####   Creating actual federations    #####
+  ##############################################
+    - name: create federation
+      tags:
+       - federations
+       - metadata
+      import_role:
+        name: ibm.isam.create_federations
+      when:
+        - federations is defined
+
+
+  ###############################################
+  ####  Creating federation-partners    #####
+  ###############################################
+  ### TODO :: extended configuration        #####
+  ###############################################
+    - name: configure federation partner first by metadata and change specific configuration
+      tags:
+        - partners
+        - federations
+        - metadata
+      import_role:
+        name: ibm.isam.create_federation_partners
+      when:
+        - federations is defined
