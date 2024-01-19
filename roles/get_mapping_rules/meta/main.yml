@@ -1,0 +1,20 @@
+galaxy_info:
+  author: IBM
+  description: Role to get mapping rules
+  company: IBM
+
+  license: Apache
+
+  min_ansible_version: 2.9
+  platforms:
+    - name: GenericLinux
+      version:
+        - all
+
+  galaxy_tags:
+  - isam
+  - ibm
+  - get
+  - aac
+  - fed
+  - mappingrule

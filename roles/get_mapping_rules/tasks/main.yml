@@ -1,0 +1,16 @@
+---
+- name: get mapping-rules
+  ibm.isam.isam:
+    log: "{{ log_level|default(omit) }}"
+    force: "{{ force|default(omit) }}"
+    action: ibmsecurity.isam.aac.mapping_rules.get_all
+    isamapi:
+  register: mapping_rules_obj
+
+- name: Create mapping-rule dictionary
+  set_fact:
+    available_mapping_rules: "{{ mapping_rules_obj.data | json_query('[].[name,id]') | community.general.dict }}"
+    cacheable: 'yes'
+  when:
+    - mapping_rules_obj.data is defined
+
