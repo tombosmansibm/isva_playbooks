@@ -1,0 +1,51 @@
+---
+#
+# Mapping rules - set them
+#
+- name: configure mapping rules
+  hosts: Federation
+  collections:
+    - ibm.isam
+  gather_facts: no
+  vars:
+    log_level: "CRITICAL"
+    port: "{{ lmi_port }}"
+  tags:
+    - mapping-rules
+    - federation
+   tasks:
+    - name: debug
+      tags:
+        - never
+        - debug
+      debug:
+        verbosity: 3
+        msg: "{{ mapping_rules|default([])|selectattr('j2_t', 'defined')|list }}"
+
+    - name: make sure the directories for generated files exists
+      file:
+        path: "{{ item.file | dirname }}"
+        state: directory
+        recurse: true
+      when:
+        - mapping_rules is defined
+        - item.file is defined
+      loop: "{{ mapping_rules|selectattr('j2_t', 'defined')|list }}"
+      delegate_to: localhost
+
+    - name: prepare mapping rules from templates on Ansible host
+      template:
+        src: "{{ item.j2_t }}"
+        dest: "{{ item.file }}"
+      when:
+        - mapping_rules is defined
+        - item.j2_t is defined
+        - item.file is defined
+      loop: "{{ mapping_rules|selectattr('j2_t', 'defined')|list }}"
+      loop_control:
+        label: "Templating {{ item.j2_t | default('Skipping ...') }}"
+      delegate_to: localhost
+
+    - name: configure mapping rules
+      import_role:
+        name: ibm.isam.aac.configure_mapping_rules
