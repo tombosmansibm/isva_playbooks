@@ -11,6 +11,9 @@
         - federations
       import_role:
         name: get_mapping_rules
+#
+#    properties:
+#      identityMappingRuleReference: "{{ available_mapping_rules['nameofmapping rule'] }}"
 
 
   ##############################################
