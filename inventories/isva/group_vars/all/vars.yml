@@ -10,14 +10,14 @@ ansible_isam_port: 443
 ansible_host: "{{ inventory_hostname }}"
 
 # 906 Activation keys
-activation_module_code_wga_906: "2889-D57C-0FEB-223A-D801-6177-68A9-069A"
-activation_module_code_mga_906: "4444-F462-E174-AA1E-E87B-9F06-E6AC-DA0B"
-activation_module_code_federation_906: "9A08-84CC-599A-5CC2-C4D9-ACD3-AD70-B4D6"
+activation_module_code_wga_906: "<codes>"
+activation_module_code_mga_906: "<codes>"
+activation_module_code_federation_906: "<codes>"
 
 # Enter your activation keys here 10
-activation_module_code_wga_10: 2889-D57C-0FEB-223A-D801-6177-68A9-069A
-activation_module_code_mga_10: 4444-F462-E174-AA1E-E87B-9F06-E6AC-DA0B
-activation_module_code_federation_10: 9A08-84CC-599A-5CC2-C4D9-ACD3-AD70-B4D6
+activation_module_code_wga_10: <codes>
+activation_module_code_mga_10: <codes>
+activation_module_code_federation_10: <codes>
 
 activation_keys:
  - id: wga
