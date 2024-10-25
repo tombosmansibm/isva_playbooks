@@ -1,0 +1,17 @@
+---
+junction_point: /medewerker/services
+junction_type: ssl
+junction_hard_limit: 0
+junction_soft_limit: 0
+basic_auth_mode: ignore
+remote_http_header:
+  - "iv-user"
+transparent_path_junction: yes
+request_encoding: utf8_uri
+servers:
+  -
+    server_uuid: 709d5d14-1793-11e8-901d-74fe4808f74b
+    server_hostname: edge-prd.web-asz.prd.duo.nl
+    server_port: 443
+    virtual_hostname: edge-prd.web-asz.prd.duo.nl
+    query_contents: /cgi-bin/query_contents

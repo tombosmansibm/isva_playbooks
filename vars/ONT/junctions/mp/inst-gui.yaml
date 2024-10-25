@@ -1,0 +1,15 @@
+---
+junction_point: /inst-gui
+junction_type: tcp
+junction_hard_limit: 0
+junction_soft_limit: 0
+basic_auth_mode: filter
+transparent_path_junction: yes
+request_encoding: utf8_uri
+servers:
+  -
+    server_uuid: a9793de4-f6b9-11e5-9791-005056994e6e
+    server_hostname: inst-prd.web-lsz.prd.duo.nl
+    server_port: 80
+    virtual_hostname: inst-prd.web-lsz.prd.duo.nl
+    query_contents: /cgi-bin/query_contents

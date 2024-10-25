@@ -1,0 +1,17 @@
+---
+junction_point: /koa
+junction_type: tcp
+junction_hard_limit: 0
+junction_soft_limit: 0
+basic_auth_mode: filter
+remote_http_header:
+  - "iv-user"
+transparent_path_junction: yes
+request_encoding: utf8_uri
+servers:
+  -
+    server_uuid: 88ba911c-5102-11e7-9a9c-00505699904f
+    server_hostname: koa-prd.web-lsz.prd.duo.nl
+    server_port: 80
+    virtual_hostname: koa-prd.web-lsz.prd.duo.nl
+    query_contents: /cgi-bin/query_contents

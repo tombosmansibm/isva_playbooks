@@ -1,0 +1,18 @@
+---
+junction_point: /sigma
+junction_type: ssl
+junction_hard_limit: 0
+junction_soft_limit: 0
+basic_auth_mode: filter
+remote_http_header:
+  - "iv-user"
+  - "iv-groups"
+transparent_path_junction: yes
+request_encoding: utf8_uri
+servers:
+  -
+    server_uuid: 580b8b14-0c81-11eb-a7e1-74fe4808f74b
+    server_hostname: grnap623.duo.local
+    server_port: 443
+    virtual_hostname: grnap623.duo.local
+    query_contents: /cgi-bin/query_contents

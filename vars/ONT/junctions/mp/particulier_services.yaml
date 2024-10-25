@@ -1,0 +1,15 @@
+---
+junction_point: /particulier/services
+junction_type: tcp
+junction_hard_limit: 0
+junction_soft_limit: 0
+basic_auth_mode: ignore
+transparent_path_junction: yes
+request_encoding: utf8_uri
+servers:
+  -
+    server_uuid: 837f349c-8883-11e7-9f0a-00505699904f
+    server_hostname: edge-prd.web-asz.prd.duo.nl
+    server_port: 80
+    virtual_hostname: edge-prd.web-asz.prd.duo.nl
+    query_contents: /cgi-bin/query_contents

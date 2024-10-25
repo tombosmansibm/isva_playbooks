@@ -1,0 +1,16 @@
+---
+junction_point: /xldeploy-jboss
+junction_type: ssl
+junction_hard_limit: 0
+junction_soft_limit: 0
+basic_auth_mode: ignore
+remote_http_header:
+  - "iv-user"
+request_encoding: utf8_uri
+servers:
+  -
+    server_uuid: b9bf59c2-b97d-11eb-8066-74fe4808f74b
+    server_hostname: xldeploy-status.prd.duo.nl
+    server_port: 443
+    virtual_hostname: xldeploy-status.prd.duo.nl
+    query_contents: /cgi-bin/query_contents
