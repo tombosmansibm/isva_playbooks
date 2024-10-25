@@ -5,12 +5,12 @@ rp_default_junctions:
     transparent_path_junction: no
     case_insensitive_url: 'yes'
     servers:
-      - server_hostname: www.google.be
+      - server_hostname: 127.0.0.1
         server_port: 443
-  - junction_point: "/v1006"
-    junction_type: 'ssl'
-    case_insensitive_url: 'yes'
-    description: "v10.0.6 syntax"
-    servers:
-      - server_hostname: www.google.be
-        server_port: '443'
+# - junction_point: "/v1006"
+#   junction_type: 'ssl'
+#   case_insensitive_url: 'yes'
+#   description: "v10.0.6 syntax"
+#   servers:
+#     - server_hostname: www.google.be
+#       server_port: '443'

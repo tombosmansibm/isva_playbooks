@@ -11,6 +11,10 @@
       import_role:
         name: ibm.isam.web.create_reverseproxy_instances
 
+    - name: "Configure reverse proxy (listen on port 444 at {{ ansible_host }}"
+      import_role:
+        name: ibm.isam.web.configure_reverseproxy_instances
+
     - name: Configure junctions
       import_role:
         name: ibm.isam.web.configure_reverseproxy_junctions

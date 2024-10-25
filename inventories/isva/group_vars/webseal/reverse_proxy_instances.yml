@@ -78,4 +78,3 @@ instances:
   junctions: "{{ rp_default_junctions|default([]) }}"
 #  management_root:
 #    - mgmt_action: import_zip
-#      file: "{{ root_playbook_dir | default(playbook_dir | dirname) }}/files/{{ webseal_cfg_path|default(duo_environment) }}/management_root_files/osr.zip"
